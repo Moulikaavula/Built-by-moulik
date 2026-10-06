@@ -12,19 +12,22 @@
         
         /* Glassmorphism */
         .glass-panel { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.05); }
-        .glass-btn { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); transition: background 0.3s ease, border 0.3s ease; }
+        .glass-btn { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); transition: background 0.3s ease, border 0.3s ease, transform 0.3s ease; }
         .glass-btn:hover { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(0, 255, 255, 0.3); }
 
-        /* Custom Cursor */
+        /* Custom Cursor - Strictly for devices with a mouse */
         @media (pointer: fine) {
             body { cursor: none; }
             .cursor-dot { position: fixed; top: 0; left: 0; width: 8px; height: 8px; background: cyan; border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); box-shadow: 0 0 10px cyan; }
             .cursor-ring { position: fixed; top: 0; left: 0; width: 30px; height: 30px; border: 1px solid rgba(0, 255, 255, 0.5); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: width 0.2s, height 0.2s; }
             a:hover ~ .cursor-ring { width: 50px; height: 50px; border-color: cyan; background: rgba(0, 255, 255, 0.1); }
+            
+            /* Disable native transform transition when magnetic effect is active to prevent jitter */
+            .magnetic-btn.is-magnetic { transition: background 0.3s ease, border 0.3s ease; }
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center p-6">
+<body class="min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 md:p-8">
     
     <!-- Custom Cursor Elements -->
     <div class="cursor-dot hidden md:block"></div>
@@ -34,38 +37,38 @@
     <canvas id="canvas-bg"></canvas>
 
     <!-- Main Container -->
-    <main class="glass-panel w-full max-w-2xl rounded-3xl p-8 flex flex-col items-center shadow-2xl z-10 relative">
+    <main class="glass-panel w-full max-w-2xl rounded-2xl md:rounded-3xl p-6 md:p-8 flex flex-col items-center shadow-2xl z-10 relative my-8">
         
         <!-- Profile / Header -->
-        <div class="w-24 h-24 rounded-full bg-gradient-to-br from-gray-800 to-black flex items-center justify-center border border-gray-700 shadow-lg mb-6">
-            <i class="fa-solid fa-code text-4xl text-cyan-400"></i>
+        <div class="w-20 h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-br from-gray-800 to-black flex items-center justify-center border border-gray-700 shadow-lg mb-5 md:mb-6">
+            <i class="fa-solid fa-code text-3xl md:text-4xl text-cyan-400"></i>
         </div>
         
-        <h1 class="text-3xl font-bold tracking-wider mb-1">Built by <span class="text-cyan-400">Moulik</span></h1>
-        <p class="text-xs tracking-[0.3em] text-gray-400 mb-10 uppercase">AI-Powered Projects</p>
+        <h1 class="text-2xl md:text-3xl font-bold tracking-wider mb-1 text-center">Built by <span class="text-cyan-400">Moulik</span></h1>
+        <p class="text-[10px] md:text-xs tracking-[0.2em] md:tracking-[0.3em] text-gray-400 mb-8 md:mb-10 uppercase text-center">AI-Powered Projects</p>
 
         <!-- Links Container -->
         <div class="w-full flex flex-col gap-4">
             
             <!-- Link 1: Arcade Rave -->
-            <a href="https://moulikaavula.github.io/Arcade-Rave/" target="_blank" class="magnetic-btn glass-btn w-full rounded-2xl p-5 flex items-start gap-5 group relative overflow-hidden">
-                <div class="w-12 h-12 rounded-full bg-black/50 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300">
-                    <i class="fa-solid fa-gamepad text-xl text-purple-400"></i>
+            <a href="https://moulikaavula.github.io/Arcade-Rave/" target="_blank" class="magnetic-btn glass-btn w-full rounded-xl md:rounded-2xl p-4 md:p-5 flex flex-col sm:flex-row items-center sm:items-start gap-4 md:gap-5 group relative overflow-hidden text-center sm:text-left">
+                <div class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-black/50 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300">
+                    <i class="fa-solid fa-gamepad text-xl md:text-2xl text-purple-400"></i>
                 </div>
                 <div class="flex flex-col">
-                    <span class="font-semibold text-lg tracking-wide group-hover:text-cyan-300 transition-colors">Arcade Rave</span>
-                    <span class="text-sm text-gray-400 mt-1">A retro-synthwave web arcade featuring 25 classic games (including Snake, Pong, and Chess) complete with a daily streak tracker and an XP leveling system.</span>
+                    <span class="font-semibold text-base md:text-lg tracking-wide group-hover:text-cyan-300 transition-colors">Arcade Rave</span>
+                    <span class="text-xs md:text-sm text-gray-400 mt-1 md:mt-2 leading-relaxed">A retro-synthwave web arcade featuring 25 classic games (including Snake, Pong, and Chess) complete with a daily streak tracker and an XP leveling system.</span>
                 </div>
             </a>
 
             <!-- Link 2: DELO -->
-            <a href="https://moulikaavula.github.io/DELO/" target="_blank" class="magnetic-btn glass-btn w-full rounded-2xl p-5 flex items-start gap-5 group relative overflow-hidden">
-                <div class="w-12 h-12 rounded-full bg-black/50 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300">
-                    <i class="fa-solid fa-chart-line text-xl text-green-400"></i>
+            <a href="https://moulikaavula.github.io/DELO/" target="_blank" class="magnetic-btn glass-btn w-full rounded-xl md:rounded-2xl p-4 md:p-5 flex flex-col sm:flex-row items-center sm:items-start gap-4 md:gap-5 group relative overflow-hidden text-center sm:text-left">
+                <div class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-black/50 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300">
+                    <i class="fa-solid fa-chart-line text-xl md:text-2xl text-green-400"></i>
                 </div>
                 <div class="flex flex-col">
-                    <span class="font-semibold text-lg tracking-wide group-hover:text-cyan-300 transition-colors">DELO Finance Tracker</span>
-                    <span class="text-sm text-gray-400 mt-1">A personal finance dashboard that calculates your monthly leftover income by tracking expenses and debt, with the added security of saving all your changes locally.</span>
+                    <span class="font-semibold text-base md:text-lg tracking-wide group-hover:text-cyan-300 transition-colors">DELO Finance Tracker</span>
+                    <span class="text-xs md:text-sm text-gray-400 mt-1 md:mt-2 leading-relaxed">A personal finance dashboard that calculates your monthly leftover income by tracking expenses and debt, with the added security of saving all your changes locally.</span>
                 </div>
             </a>
 
@@ -80,17 +83,29 @@
         let particles = [];
         let mouse = { x: null, y: null };
 
+        // Increased particle count for a denser background
+        const getParticleCount = () => window.innerWidth < 768 ? 60 : 150;
+
+        function initParticles() {
+            particles = [];
+            const count = getParticleCount();
+            for (let i = 0; i < count; i++) {
+                particles.push(new Particle());
+            }
+        }
+
         function resize() {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
         }
+        
         window.addEventListener('resize', resize);
-        resize();
+        window.addEventListener('orientationchange', () => setTimeout(resize, 100));
 
         class Particle {
             constructor() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
+                this.x = Math.random() * (window.innerWidth || 1000);
+                this.y = Math.random() * (window.innerHeight || 1000);
                 this.vx = (Math.random() - 0.5) * 0.5;
                 this.vy = (Math.random() - 0.5) * 0.5;
                 this.radius = Math.random() * 1.5 + 0.5;
@@ -104,12 +119,17 @@
             draw() {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(0, 255, 255, 0.5)';
+                // Brighter cyan color with full opacity
+                ctx.fillStyle = 'rgba(0, 255, 255, 0.9)'; 
+                ctx.shadowBlur = 6;
+                ctx.shadowColor = 'cyan';
                 ctx.fill();
+                ctx.shadowBlur = 0; // Reset shadow so it doesn't affect lines too heavily
             }
         }
 
-        for (let i = 0; i < 80; i++) particles.push(new Particle());
+        resize();
+        initParticles();
 
         function animateBg() {
             ctx.clearRect(0, 0, width, height);
@@ -123,11 +143,14 @@
                     const dx = p.x - p2.x;
                     const dy = p.y - p2.y;
                     const dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < 100) {
+                    const connectDist = window.innerWidth < 768 ? 75 : 100;
+                    
+                    if (dist < connectDist) {
                         ctx.beginPath();
                         ctx.moveTo(p.x, p.y);
                         ctx.lineTo(p2.x, p2.y);
-                        ctx.strokeStyle = `rgba(255, 255, 255, ${0.1 - dist/1000})`;
+                        // Brighter white/cyan lines connecting the dots
+                        ctx.strokeStyle = `rgba(100, 255, 255, ${0.3 - dist/(connectDist*3.3)})`;
                         ctx.stroke();
                     }
                 });
@@ -141,7 +164,8 @@
                         ctx.beginPath();
                         ctx.moveTo(p.x, p.y);
                         ctx.lineTo(mouse.x, mouse.y);
-                        ctx.strokeStyle = `rgba(0, 255, 255, ${0.2 - dist/750})`;
+                        // Bright neon cyan line drawn to the mouse cursor
+                        ctx.strokeStyle = `rgba(0, 255, 255, ${0.5 - dist/300})`;
                         ctx.stroke();
                     }
                 }
@@ -163,7 +187,6 @@
                 dot.style.top = mouse.y + 'px';
             });
 
-            // Smooth ring follow (lerp)
             function renderCursor() {
                 if (mouse.x != null) {
                     ringX += (mouse.x - ringX) * 0.15;
@@ -175,20 +198,22 @@
             }
             renderCursor();
 
-            // Magnetic Buttons
             const magneticBtns = document.querySelectorAll('.magnetic-btn');
             magneticBtns.forEach(btn => {
+                btn.addEventListener('mouseenter', () => {
+                    btn.classList.add('is-magnetic');
+                });
+                
                 btn.addEventListener('mousemove', (e) => {
                     const rect = btn.getBoundingClientRect();
                     const x = e.clientX - rect.left - rect.width / 2;
                     const y = e.clientY - rect.top - rect.height / 2;
                     
-                    // Pull button slightly toward mouse
                     btn.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px)`;
                 });
 
                 btn.addEventListener('mouseleave', () => {
-                    // Reset position smoothly
+                    btn.classList.remove('is-magnetic');
                     btn.style.transform = `translate(0px, 0px)`;
                 });
             });
