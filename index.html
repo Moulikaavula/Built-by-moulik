@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Built by Moulik | AI-Powered Projects</title>
+    <title>Built by Moulik</title>
+    
+    <!-- High Quality Favicon & Apple Touch Icon -->
+    <link rel="icon" type="image/jpeg" href="Gemini_Generated_Image_ugcoabugcoabugco.jpg">
+    <link rel="apple-touch-icon" href="Gemini_Generated_Image_ugcoabugcoabugco.jpg">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -40,8 +45,8 @@
     <main class="glass-panel w-full max-w-2xl rounded-2xl md:rounded-3xl p-6 md:p-8 flex flex-col items-center shadow-2xl z-10 relative my-8">
         
         <!-- Profile / Header -->
-        <div class="w-20 h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-br from-gray-800 to-black flex items-center justify-center border border-gray-700 shadow-lg mb-5 md:mb-6">
-            <i class="fa-solid fa-code text-3xl md:text-4xl text-cyan-400"></i>
+        <div class="w-20 h-20 md:w-24 md:h-24 rounded-xl bg-black overflow-hidden flex items-center justify-center border border-gray-700 shadow-lg mb-5 md:mb-6">
+            <img src="Gemini_Generated_Image_ugcoabugcoabugco.jpg" alt="Moulik Logo" class="w-full h-full object-cover">
         </div>
         
         <h1 class="text-2xl md:text-3xl font-bold tracking-wider mb-1 text-center">Built by <span class="text-cyan-400">Moulik</span></h1>
@@ -57,167 +62,11 @@
                 </div>
                 <div class="flex flex-col">
                     <span class="font-semibold text-base md:text-lg tracking-wide group-hover:text-cyan-300 transition-colors">Arcade Rave</span>
-                    <span class="text-xs md:text-sm text-gray-400 mt-1 md:mt-2 leading-relaxed">A retro-synthwave web arcade featuring 25 classic games (including Snake, Pong, and Chess) complete with a daily streak tracker and an XP leveling system.</span>
+                    <span class="text-xs md:text-sm text-gray-400 mt-1 md:mt-2 leading-relaxed">A retro-synthwave web arcade featuring a collection of classic games (including Snake, Pong, and Chess) complete with a daily streak tracker and an XP leveling system.</span>
                 </div>
             </a>
 
             <!-- Link 2: DELO -->
             <a href="https://moulikaavula.github.io/DELO/" target="_blank" class="magnetic-btn glass-btn w-full rounded-xl md:rounded-2xl p-4 md:p-5 flex flex-col sm:flex-row items-center sm:items-start gap-4 md:gap-5 group relative overflow-hidden text-center sm:text-left">
                 <div class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-black/50 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300">
-                    <i class="fa-solid fa-chart-line text-xl md:text-2xl text-green-400"></i>
-                </div>
-                <div class="flex flex-col">
-                    <span class="font-semibold text-base md:text-lg tracking-wide group-hover:text-cyan-300 transition-colors">DELO Finance Tracker</span>
-                    <span class="text-xs md:text-sm text-gray-400 mt-1 md:mt-2 leading-relaxed">A personal finance dashboard that calculates your monthly leftover income by tracking expenses and debt, with the added security of saving all your changes locally.</span>
-                </div>
-            </a>
-
-        </div>
-    </main>
-
-    <script>
-        // --- Canvas Particle Background ---
-        const canvas = document.getElementById('canvas-bg');
-        const ctx = canvas.getContext('2d');
-        let width, height;
-        let particles = [];
-        let mouse = { x: null, y: null };
-
-        // Increased particle count for a denser background
-        const getParticleCount = () => window.innerWidth < 768 ? 60 : 150;
-
-        function initParticles() {
-            particles = [];
-            const count = getParticleCount();
-            for (let i = 0; i < count; i++) {
-                particles.push(new Particle());
-            }
-        }
-
-        function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        }
-        
-        window.addEventListener('resize', resize);
-        window.addEventListener('orientationchange', () => setTimeout(resize, 100));
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * (window.innerWidth || 1000);
-                this.y = Math.random() * (window.innerHeight || 1000);
-                this.vx = (Math.random() - 0.5) * 0.5;
-                this.vy = (Math.random() - 0.5) * 0.5;
-                this.radius = Math.random() * 1.5 + 0.5;
-            }
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-                if (this.x < 0 || this.x > width) this.vx *= -1;
-                if (this.y < 0 || this.y > height) this.vy *= -1;
-            }
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                // Brighter cyan color with full opacity
-                ctx.fillStyle = 'rgba(0, 255, 255, 0.9)'; 
-                ctx.shadowBlur = 6;
-                ctx.shadowColor = 'cyan';
-                ctx.fill();
-                ctx.shadowBlur = 0; // Reset shadow so it doesn't affect lines too heavily
-            }
-        }
-
-        resize();
-        initParticles();
-
-        function animateBg() {
-            ctx.clearRect(0, 0, width, height);
-            
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-                
-                // Connect particles to each other
-                particles.forEach(p2 => {
-                    const dx = p.x - p2.x;
-                    const dy = p.y - p2.y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    const connectDist = window.innerWidth < 768 ? 75 : 100;
-                    
-                    if (dist < connectDist) {
-                        ctx.beginPath();
-                        ctx.moveTo(p.x, p.y);
-                        ctx.lineTo(p2.x, p2.y);
-                        // Brighter white/cyan lines connecting the dots
-                        ctx.strokeStyle = `rgba(100, 255, 255, ${0.3 - dist/(connectDist*3.3)})`;
-                        ctx.stroke();
-                    }
-                });
-
-                // Connect particles to mouse
-                if (mouse.x != null) {
-                    const dx = p.x - mouse.x;
-                    const dy = p.y - mouse.y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < 150) {
-                        ctx.beginPath();
-                        ctx.moveTo(p.x, p.y);
-                        ctx.lineTo(mouse.x, mouse.y);
-                        // Bright neon cyan line drawn to the mouse cursor
-                        ctx.strokeStyle = `rgba(0, 255, 255, ${0.5 - dist/300})`;
-                        ctx.stroke();
-                    }
-                }
-            });
-            requestAnimationFrame(animateBg);
-        }
-        animateBg();
-
-        // --- Custom Cursor & Magnetic Physics (Desktop Only) ---
-        if (window.matchMedia("(pointer: fine)").matches) {
-            const dot = document.querySelector('.cursor-dot');
-            const ring = document.querySelector('.cursor-ring');
-            let ringX = 0, ringY = 0;
-
-            window.addEventListener('mousemove', (e) => {
-                mouse.x = e.clientX;
-                mouse.y = e.clientY;
-                dot.style.left = mouse.x + 'px';
-                dot.style.top = mouse.y + 'px';
-            });
-
-            function renderCursor() {
-                if (mouse.x != null) {
-                    ringX += (mouse.x - ringX) * 0.15;
-                    ringY += (mouse.y - ringY) * 0.15;
-                    ring.style.left = ringX + 'px';
-                    ring.style.top = ringY + 'px';
-                }
-                requestAnimationFrame(renderCursor);
-            }
-            renderCursor();
-
-            const magneticBtns = document.querySelectorAll('.magnetic-btn');
-            magneticBtns.forEach(btn => {
-                btn.addEventListener('mouseenter', () => {
-                    btn.classList.add('is-magnetic');
-                });
-                
-                btn.addEventListener('mousemove', (e) => {
-                    const rect = btn.getBoundingClientRect();
-                    const x = e.clientX - rect.left - rect.width / 2;
-                    const y = e.clientY - rect.top - rect.height / 2;
-                    
-                    btn.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px)`;
-                });
-
-                btn.addEventListener('mouseleave', () => {
-                    btn.classList.remove('is-magnetic');
-                    btn.style.transform = `translate(0px, 0px)`;
-                });
-            });
-        }
-    </script>
-</body>
-</html>
+                    <i class="fa-solid fa-chart-line text-xl md:text-2xl text-green-400">
