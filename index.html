@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Built by Moulik</title>
+    <title>Built by Moulik | AI-Powered Projects</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -57,7 +57,7 @@
                 </div>
                 <div class="flex flex-col">
                     <span class="font-semibold text-base md:text-lg tracking-wide group-hover:text-cyan-300 transition-colors">Arcade Rave</span>
-                    <span class="text-xs md:text-sm text-gray-400 mt-1 md:mt-2 leading-relaxed">A retro-synthwave web arcade featuring a collection of classic games (including Snake, Pong, and Chess) complete with a daily streak tracker and an XP leveling system.</span>
+                    <span class="text-xs md:text-sm text-gray-400 mt-1 md:mt-2 leading-relaxed">A retro-synthwave web arcade featuring 25 classic games (including Snake, Pong, and Chess) complete with a daily streak tracker and an XP leveling system.</span>
                 </div>
             </a>
 
@@ -83,8 +83,8 @@
         let particles = [];
         let mouse = { x: null, y: null };
 
-        // Increased particle count for a denser background
-        const getParticleCount = () => window.innerWidth < 768 ? 60 : 150;
+        // Optimization: Reduce particles on smaller screens to save battery/performance
+        const getParticleCount = () => window.innerWidth < 768 ? 30 : 80;
 
         function initParticles() {
             particles = [];
@@ -97,13 +97,17 @@
         function resize() {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
+            // Re-initialize particles if crossing the mobile/desktop threshold could be done here, 
+            // but for simplicity we'll just keep them contained to the new dimensions.
         }
         
         window.addEventListener('resize', resize);
+        // Handle mobile orientation changes
         window.addEventListener('orientationchange', () => setTimeout(resize, 100));
 
         class Particle {
             constructor() {
+                // Initialize randomly within bounds
                 this.x = Math.random() * (window.innerWidth || 1000);
                 this.y = Math.random() * (window.innerHeight || 1000);
                 this.vx = (Math.random() - 0.5) * 0.5;
@@ -119,12 +123,8 @@
             draw() {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                // Brighter cyan color with full opacity
-                ctx.fillStyle = 'rgba(0, 255, 255, 0.9)'; 
-                ctx.shadowBlur = 6;
-                ctx.shadowColor = 'cyan';
+                ctx.fillStyle = 'rgba(0, 255, 255, 0.5)';
                 ctx.fill();
-                ctx.shadowBlur = 0; // Reset shadow so it doesn't affect lines too heavily
             }
         }
 
@@ -143,19 +143,18 @@
                     const dx = p.x - p2.x;
                     const dy = p.y - p2.y;
                     const dist = Math.sqrt(dx * dx + dy * dy);
+                    // Connection distance slightly shorter on mobile to save processing
                     const connectDist = window.innerWidth < 768 ? 75 : 100;
-                    
                     if (dist < connectDist) {
                         ctx.beginPath();
                         ctx.moveTo(p.x, p.y);
                         ctx.lineTo(p2.x, p2.y);
-                        // Brighter white/cyan lines connecting the dots
-                        ctx.strokeStyle = `rgba(100, 255, 255, ${0.3 - dist/(connectDist*3.3)})`;
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${0.1 - dist/(connectDist*10)})`;
                         ctx.stroke();
                     }
                 });
 
-                // Connect particles to mouse
+                // Connect particles to mouse (only matters if mouse is active)
                 if (mouse.x != null) {
                     const dx = p.x - mouse.x;
                     const dy = p.y - mouse.y;
@@ -164,8 +163,7 @@
                         ctx.beginPath();
                         ctx.moveTo(p.x, p.y);
                         ctx.lineTo(mouse.x, mouse.y);
-                        // Bright neon cyan line drawn to the mouse cursor
-                        ctx.strokeStyle = `rgba(0, 255, 255, ${0.5 - dist/300})`;
+                        ctx.strokeStyle = `rgba(0, 255, 255, ${0.2 - dist/750})`;
                         ctx.stroke();
                     }
                 }
@@ -187,6 +185,7 @@
                 dot.style.top = mouse.y + 'px';
             });
 
+            // Smooth ring follow (lerp)
             function renderCursor() {
                 if (mouse.x != null) {
                     ringX += (mouse.x - ringX) * 0.15;
@@ -198,6 +197,7 @@
             }
             renderCursor();
 
+            // Magnetic Buttons
             const magneticBtns = document.querySelectorAll('.magnetic-btn');
             magneticBtns.forEach(btn => {
                 btn.addEventListener('mouseenter', () => {
@@ -209,11 +209,13 @@
                     const x = e.clientX - rect.left - rect.width / 2;
                     const y = e.clientY - rect.top - rect.height / 2;
                     
+                    // Pull button slightly toward mouse
                     btn.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px)`;
                 });
 
                 btn.addEventListener('mouseleave', () => {
                     btn.classList.remove('is-magnetic');
+                    // Reset position smoothly
                     btn.style.transform = `translate(0px, 0px)`;
                 });
             });
