@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Built by Moulik | AI-Powered Projects</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { margin: 0; overflow-x: hidden; background: #050505; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        #canvas-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; }
+        
+        /* Glassmorphism */
+        .glass-panel { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .glass-btn { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); transition: background 0.3s ease, border 0.3s ease; }
+        .glass-btn:hover { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(0, 255, 255, 0.3); }
+
+        /* Custom Cursor */
+        @media (pointer: fine) {
+            body { cursor: none; }
+            .cursor-dot { position: fixed; top: 0; left: 0; width: 8px; height: 8px; background: cyan; border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); box-shadow: 0 0 10px cyan; }
+            .cursor-ring { position: fixed; top: 0; left: 0; width: 30px; height: 30px; border: 1px solid rgba(0, 255, 255, 0.5); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: width 0.2s, height 0.2s; }
+            a:hover ~ .cursor-ring { width: 50px; height: 50px; border-color: cyan; background: rgba(0, 255, 255, 0.1); }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-6">
+    
+    <!-- Custom Cursor Elements -->
+    <div class="cursor-dot hidden md:block"></div>
+    <div class="cursor-ring hidden md:block"></div>
+
+    <!-- Background Canvas -->
+    <canvas id="canvas-bg"></canvas>
+
+    <!-- Main Container -->
+    <main class="glass-panel w-full max-w-2xl rounded-3xl p-8 flex flex-col items-center shadow-2xl z-10 relative">
+        
+        <!-- Profile / Header -->
+        <div class="w-24 h-24 rounded-full bg-gradient-to-br from-gray-800 to-black flex items-center justify-center border border-gray-700 shadow-lg mb-6">
+            <i class="fa-solid fa-code text-4xl text-cyan-400"></i>
+        </div>
+        
+        <h1 class="text-3xl font-bold tracking-wider mb-1">Built by <span class="text-cyan-400">Moulik</span></h1>
+        <p class="text-xs tracking-[0.3em] text-gray-400 mb-10 uppercase">AI-Powered Projects</p>
+
+        <!-- Links Container -->
+        <div class="w-full flex flex-col gap-4">
+            
+            <!-- Link 1: Arcade Rave -->
+            <a href="https://moulikaavula.github.io/Arcade-Rave/" target="_blank" class="magnetic-btn glass-btn w-full rounded-2xl p-5 flex items-start gap-5 group relative overflow-hidden">
+                <div class="w-12 h-12 rounded-full bg-black/50 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300">
+                    <i class="fa-solid fa-gamepad text-xl text-purple-400"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-semibold text-lg tracking-wide group-hover:text-cyan-300 transition-colors">Arcade Rave</span>
+                    <span class="text-sm text-gray-400 mt-1">A retro-synthwave web arcade featuring 25 classic games (including Snake, Pong, and Chess) complete with a daily streak tracker and an XP leveling system.</span>
+                </div>
+            </a>
+
+            <!-- Link 2: DELO -->
+            <a href="https://moulikaavula.github.io/DELO/" target="_blank" class="magnetic-btn glass-btn w-full rounded-2xl p-5 flex items-start gap-5 group relative overflow-hidden">
+                <div class="w-12 h-12 rounded-full bg-black/50 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300">
+                    <i class="fa-solid fa-chart-line text-xl text-green-400"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-semibold text-lg tracking-wide group-hover:text-cyan-300 transition-colors">DELO Finance Tracker</span>
+                    <span class="text-sm text-gray-400 mt-1">A personal finance dashboard that calculates your monthly leftover income by tracking expenses and debt, with the added security of saving all your changes locally.</span>
+                </div>
+            </a>
+
+        </div>
+    </main>
+
+    <script>
+        // --- Canvas Particle Background ---
+        const canvas = document.getElementById('canvas-bg');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+        let mouse = { x: null, y: null };
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.radius = Math.random() * 1.5 + 0.5;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(0, 255, 255, 0.5)';
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 80; i++) particles.push(new Particle());
+
+        function animateBg() {
+            ctx.clearRect(0, 0, width, height);
+            
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+                
+                // Connect particles to each other
+                particles.forEach(p2 => {
+                    const dx = p.x - p2.x;
+                    const dy = p.y - p2.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 100) {
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${0.1 - dist/1000})`;
+                        ctx.stroke();
+                    }
+                });
+
+                // Connect particles to mouse
+                if (mouse.x != null) {
+                    const dx = p.x - mouse.x;
+                    const dy = p.y - mouse.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 150) {
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(mouse.x, mouse.y);
+                        ctx.strokeStyle = `rgba(0, 255, 255, ${0.2 - dist/750})`;
+                        ctx.stroke();
+                    }
+                }
+            });
+            requestAnimationFrame(animateBg);
+        }
+        animateBg();
+
+        // --- Custom Cursor & Magnetic Physics (Desktop Only) ---
+        if (window.matchMedia("(pointer: fine)").matches) {
+            const dot = document.querySelector('.cursor-dot');
+            const ring = document.querySelector('.cursor-ring');
+            let ringX = 0, ringY = 0;
+
+            window.addEventListener('mousemove', (e) => {
+                mouse.x = e.clientX;
+                mouse.y = e.clientY;
+                dot.style.left = mouse.x + 'px';
+                dot.style.top = mouse.y + 'px';
+            });
+
+            // Smooth ring follow (lerp)
+            function renderCursor() {
+                if (mouse.x != null) {
+                    ringX += (mouse.x - ringX) * 0.15;
+                    ringY += (mouse.y - ringY) * 0.15;
+                    ring.style.left = ringX + 'px';
+                    ring.style.top = ringY + 'px';
+                }
+                requestAnimationFrame(renderCursor);
+            }
+            renderCursor();
+
+            // Magnetic Buttons
+            const magneticBtns = document.querySelectorAll('.magnetic-btn');
+            magneticBtns.forEach(btn => {
+                btn.addEventListener('mousemove', (e) => {
+                    const rect = btn.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    
+                    // Pull button slightly toward mouse
+                    btn.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px)`;
+                });
+
+                btn.addEventListener('mouseleave', () => {
+                    // Reset position smoothly
+                    btn.style.transform = `translate(0px, 0px)`;
+                });
+            });
+        }
+    </script>
+</body>
+</html>
