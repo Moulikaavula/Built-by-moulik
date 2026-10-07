@@ -4,21 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Built by Moulik</title>
+    <meta name="description" content="AI-powered projects by Moulik: Arcade Rave and DELO Finance Tracker.">
+    <meta name="theme-color" content="#050505">
     
     <!-- Code-Generated SVG Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' stop-color='%2300ffff'/%3E%3Cstop offset='100%25' stop-color='%238b5cf6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' fill='black'/%3E%3Cg fill='url(%23grad)'%3E%3Crect x='16' y='16' width='22' height='8' rx='1'/%3E%3Crect x='62' y='16' width='22' height='8' rx='1'/%3E%3Crect x='16' y='28' width='28' height='8' rx='1'/%3E%3Crect x='56' y='28' width='28' height='8' rx='1'/%3E%3Crect x='16' y='40' width='32' height='8' rx='1'/%3E%3Crect x='52' y='40' width='32' height='8' rx='1'/%3E%3Crect x='16' y='52' width='22' height='8' rx='1'/%3E%3Crect x='42' y='52' width='16' height='8' rx='1'/%3E%3Crect x='62' y='52' width='22' height='8' rx='1'/%3E%3Crect x='16' y='64' width='22' height='8' rx='1'/%3E%3Crect x='46' y='64' width='8' height='8' rx='1'/%3E%3Crect x='62' y='64' width='22' height='8' rx='1'/%3E%3Crect x='16' y='76' width='22' height='8' rx='1'/%3E%3Crect x='62' y='76' width='22' height='8' rx='1'/%3E%3C/g%3E%3C/svg%3E">
 
-    <!-- Tailwind & FontAwesome -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap">
 <style>
+/* Minimal utilities (replaces the Tailwind Play CDN) */
+*,*::before,*::after{box-sizing:border-box} html{line-height:1.5;-webkit-text-size-adjust:100%} h1,p{margin:0} svg{display:block}
+body{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1rem;position:relative}
+.panel{width:100%;max-width:42rem;border-radius:1rem;padding:1.5rem;display:flex;flex-direction:column;align-items:center;box-shadow:0 25px 50px -12px rgba(0,0,0,.6);z-index:10;margin:2rem 0}
+.logo-wrap{width:5rem;height:5rem;border-radius:.75rem;background:#000;overflow:hidden;display:flex;align-items:center;justify-content:center;margin-bottom:1.25rem}
+.logo-wrap svg{width:100%;height:100%}
+.hero{display:flex;flex-direction:column;align-items:center}
+h1{font-size:1.875rem;line-height:2.25rem;font-weight:700;letter-spacing:.05em;margin-bottom:.5rem;text-align:center}
+.tagline{font-size:10px;letter-spacing:.2em;color:#9ca3af;margin-bottom:1rem;text-transform:uppercase;text-align:center}
+.pill{margin-bottom:2rem}
+.list{width:100%;display:flex;flex-direction:column;gap:1rem}
+.desc{font-size:.75rem;line-height:1.625;color:#9ca3af;margin-top:.25rem}
+.cursor-dot,.cursor-ring{display:none}
+@media (min-width:640px){body{padding:1.5rem}}
+@media (min-width:768px){body{padding:2rem}.panel{border-radius:1.5rem;padding:2rem}.logo-wrap{width:6rem;height:6rem;margin-bottom:1.5rem}h1{font-size:2.25rem;line-height:2.5rem}.tagline{font-size:.75rem;letter-spacing:.3em}.pill{margin-bottom:2.5rem}.desc{font-size:.875rem}}
+a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
 @property --angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
 :root { --cyan:#00ffff; --violet:#8b5cf6; }
 body { margin:0; overflow-x:hidden; background:#050505; color:#fff; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; }
 h1, .display { font-family:'Space Grotesk','Segoe UI',sans-serif; }
-#canvas-bg { position:fixed; inset:0; width:100vw; height:100vh; z-index:-1; pointer-events:none; }
+#canvas-bg { position:fixed; inset:0; width:100%; height:100%; z-index:-1; pointer-events:none; }
 
 /* Aurora + grid backdrop */
 .aurora { position:fixed; inset:0; z-index:-3; overflow:hidden; pointer-events:none; }
@@ -74,6 +91,7 @@ h1, .display { font-family:'Space Grotesk','Segoe UI',sans-serif; }
 .shine { position:absolute; top:0; left:-60%; width:35%; height:100%; pointer-events:none; transform:skewX(-20deg);
   background:linear-gradient(100deg,transparent,rgba(255,255,255,.2),transparent); transition:left .9s ease; }
 .project-card:hover .shine { left:130%; }
+.icon-orb i{pointer-events:none}
 .icon-orb { position:relative; width:3.5rem; height:3.5rem; flex-shrink:0; border-radius:50%; background:rgba(0,0,0,.55); display:flex; align-items:center; justify-content:center;
   font-size:1.5rem; color:var(--accent); border:1px solid color-mix(in srgb,var(--accent) 40%,transparent); transition:transform .45s cubic-bezier(.3,1.6,.5,1),box-shadow .4s; transform:translateZ(30px); }
 .project-card:hover .icon-orb { transform:translateZ(30px) scale(1.18) rotate(-10deg); box-shadow:0 0 28px var(--accent); }
@@ -90,31 +108,32 @@ h1, .display { font-family:'Space Grotesk','Segoe UI',sans-serif; }
 
 /* Custom Cursor - Desktop Only */
 @media (pointer: fine) {
-  html, body, *, *::before, *::after { cursor:none !important; }
+  html.custom-cursor, html.custom-cursor *, html.custom-cursor *::before, html.custom-cursor *::after { cursor:none !important; }
+  html.custom-cursor .cursor-dot, html.custom-cursor .cursor-ring { display:block; }
   .cursor-dot { position:fixed; top:0; left:0; width:8px; height:8px; background:cyan; border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); box-shadow:0 0 10px cyan; transition:width .15s,height .15s; }
   .cursor-ring { position:fixed; top:0; left:0; width:30px; height:30px; border:1px solid rgba(0,255,255,.5); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:width .2s,height .2s,background .2s; }
   .cursor-ring.is-hovering { width:56px; height:56px; border-color:cyan; background:rgba(0,255,255,.1); }
   .cursor-ring.is-clicking { width:22px; height:22px; background:rgba(0,255,255,.25); }
   .cursor-dot.is-clicking { width:5px; height:5px; }
 }
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; } .reveal { opacity:1; transform:none; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; } .reveal { opacity:1; transform:none; } .aurora i, .floor div { animation:none !important; } }
 </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 md:p-8 relative">
+<body>
     <div class="aurora"><i></i><i></i><i></i></div>
     <div class="horizon"></div>
     <div class="floor"><div></div></div>
     <div class="mouse-glow"></div>
     <div class="vignette"></div>
-    <div class="cursor-dot hidden md:block"></div>
-    <div class="cursor-ring hidden md:block"></div>
-    <canvas id="canvas-bg"></canvas>
+    <div class="cursor-dot" aria-hidden="true"></div>
+    <div class="cursor-ring" aria-hidden="true"></div>
+    <canvas id="canvas-bg" aria-hidden="true"></canvas>
 
-    <main class="glass-panel edge w-full max-w-2xl rounded-2xl md:rounded-3xl p-6 md:p-8 flex flex-col items-center shadow-2xl z-10 relative my-8">
-        <div class="reveal flex flex-col items-center" style="--i:0">
+    <main class="glass-panel edge panel">
+        <div class="reveal hero" style="--i:0">
         <!-- Profile / Header SVG Logo -->
-        <div class="logo-wrap w-20 h-20 md:w-24 md:h-24 rounded-xl bg-black overflow-hidden flex items-center justify-center mb-5 md:mb-6">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-full h-full block">
+        <div class="logo-wrap">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Moulik logo">
                 <defs>
                     <linearGradient id="main-grad" x1="0%" y1="0%" x2="100%" y2="0%">
                         <stop offset="0%" stop-color="#00ffff"/>
@@ -145,81 +164,100 @@ h1, .display { font-family:'Space Grotesk','Segoe UI',sans-serif; }
         </div>
         
         
-        <h1 class="text-3xl md:text-4xl font-bold tracking-wider mb-2 text-center">Built by <span class="title-grad">Moulik</span></h1>
-        <p class="text-[10px] md:text-xs tracking-[0.2em] md:tracking-[0.3em] text-gray-400 mb-4 uppercase text-center">AI-Powered Projects</p>
-        <span class="pill mb-8 md:mb-10"><span class="dot-live"></span>2 projects live</span>
+        <h1>Built by <span class="title-grad">Moulik</span></h1>
+        <p class="tagline" id="tagline">AI-Powered Projects</p>
+        <span class="pill"><span class="dot-live"></span><span id="project-count">2 projects live</span></span>
         </div>
 
-        <div class="w-full flex flex-col gap-4">
+        <div class="list">
             <div class="reveal" style="--i:1">
-            <a href="https://moulikaavula.github.io/Arcade-Rave/" target="_blank" class="project-card magnetic-btn" style="--accent:#a855f7">
+            <a href="https://moulikaavula.github.io/Arcade-Rave/" target="_blank" rel="noopener noreferrer" class="project-card magnetic-btn" style="--accent:#a855f7">
                 <span class="shine"></span>
-                <div class="icon-orb"><i class="fa-solid fa-gamepad pointer-events-none"></i></div>
+                <div class="icon-orb"><i class="fa-solid fa-gamepad" aria-hidden="true"></i></div>
                 <div class="card-text">
                     <span class="card-title">Arcade Rave</span>
-                    <span class="text-xs md:text-sm text-gray-400 mt-1 leading-relaxed">A retro-synthwave web arcade featuring a growing collection of classic games and engaging player progression features.</span>
+                    <span class="desc">A retro-synthwave web arcade featuring a growing collection of classic games and engaging player progression features.</span>
                 </div>
-                <span class="arrow"><i class="fa-solid fa-arrow-right"></i></span>
+                <span class="arrow"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
             </a>
             </div>
             <div class="reveal" style="--i:2">
-            <a href="https://moulikaavula.github.io/DELO/" target="_blank" class="project-card magnetic-btn" style="--accent:#4ade80">
+            <a href="https://moulikaavula.github.io/DELO/" target="_blank" rel="noopener noreferrer" class="project-card magnetic-btn" style="--accent:#4ade80">
                 <span class="shine"></span>
-                <div class="icon-orb"><i class="fa-solid fa-chart-line pointer-events-none"></i></div>
+                <div class="icon-orb"><i class="fa-solid fa-chart-line" aria-hidden="true"></i></div>
                 <div class="card-text">
                     <span class="card-title">DELO Finance Tracker</span>
-                    <span class="text-xs md:text-sm text-gray-400 mt-1 leading-relaxed">A secure personal finance dashboard designed to help you organize your budget, track expenses, and seamlessly manage your money.</span>
+                    <span class="desc">A secure personal finance dashboard designed to help you organize your budget, track expenses, and seamlessly manage your money.</span>
                 </div>
-                <span class="arrow"><i class="fa-solid fa-arrow-right"></i></span>
+                <span class="arrow"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
             </a>
             </div>
         </div>
     </main>
 
     <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const canvas = document.getElementById('canvas-bg');
-        if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-        let width, height, particles = [], mouse = { x: null, y: null };
-        const COLORS = ['0,255,255', '0,255,255', '139,92,246'];
+(() => {
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const cards = document.querySelectorAll('.project-card');
+    const countEl = document.getElementById('project-count');
+    if (countEl) countEl.textContent = cards.length + (cards.length === 1 ? ' project live' : ' projects live');
 
-        function resize() { width = canvas.width = innerWidth; height = canvas.height = innerHeight; }
-        addEventListener('resize', resize);
-        addEventListener('orientationchange', () => setTimeout(resize, 100));
+    // Tagline scramble on load
+    const tag = document.getElementById('tagline');
+    if (tag && !reduce) {
+        const final = tag.textContent, glyphs = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ#%&*+', t0 = performance.now();
+        tag.setAttribute('aria-label', final);
+        (function tick(now) {
+            const p = Math.min((now - t0 - 500) / 900, 1);
+            if (p < 0) return requestAnimationFrame(tick);
+            tag.textContent = [...final].map((c, k) => c === ' ' || k < p * final.length ? c : glyphs[Math.random() * glyphs.length | 0]).join('');
+            if (p < 1) requestAnimationFrame(tick); else tag.textContent = final;
+        })(performance.now());
+    }
 
-        class Particle {
-            constructor() {
-                this.x = Math.random() * (innerWidth || 1000); this.y = Math.random() * (innerHeight || 1000);
-                this.vx = (Math.random() - .5) * .5; this.vy = (Math.random() - .5) * .5;
-                this.radius = Math.random() * 1.5 + .5; this.c = COLORS[Math.floor(Math.random() * COLORS.length)];
-            }
-            update() {
-                this.x += this.vx; this.y += this.vy;
-                if (mouse.x != null) {
-                    const dx = this.x - mouse.x, dy = this.y - mouse.y, d = Math.hypot(dx, dy);
-                    if (d < 130 && d > 0) { this.x += dx / d * (130 - d) * .03; this.y += dy / d * (130 - d) * .03; }
-                }
-                if (this.x < 0 || this.x > width) this.vx *= -1;
-                if (this.y < 0 || this.y > height) this.vy *= -1;
-            }
-            draw() {
-                ctx.beginPath(); ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(${this.c},.9)`; ctx.shadowBlur = 5; ctx.shadowColor = `rgb(${this.c})`;
-                ctx.fill(); ctx.shadowBlur = 0;
-            }
+    const canvas = document.getElementById('canvas-bg');
+    const ctx = canvas && canvas.getContext('2d');
+    const mouse = { x: null, y: null };
+    const COLORS = ['0,255,255', '0,255,255', '139,92,246'];
+    let width, height, particles = [], stars = [], bursts = [];
+
+    function resize() {
+        const dpr = Math.min(devicePixelRatio || 1, 2);
+        width = innerWidth; height = innerHeight;
+        canvas.width = width * dpr; canvas.height = height * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        particles.forEach(p => { p.x = Math.min(p.x, width); p.y = Math.min(p.y, height); });
+    }
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * width; this.y = Math.random() * height;
+            this.vx = (Math.random() - .5) * .5; this.vy = (Math.random() - .5) * .5;
+            this.radius = Math.random() * 1.5 + .5; this.c = COLORS[Math.random() * COLORS.length | 0];
         }
+        update() {
+            this.x += this.vx; this.y += this.vy;
+            if (mouse.x != null) {
+                const dx = this.x - mouse.x, dy = this.y - mouse.y, d = Math.hypot(dx, dy);
+                if (d < 130 && d > 0) { this.x += dx / d * (130 - d) * .03; this.y += dy / d * (130 - d) * .03; }
+            }
+            if (this.x < 0 || this.x > width) { this.vx *= -1; this.x = Math.max(0, Math.min(width, this.x)); }
+            if (this.y < 0 || this.y > height) { this.vy *= -1; this.y = Math.max(0, Math.min(height, this.y)); }
+        }
+        draw() {
+            ctx.beginPath(); ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${this.c},.9)`; ctx.shadowBlur = 5; ctx.shadowColor = `rgb(${this.c})`;
+            ctx.fill(); ctx.shadowBlur = 0;
+        }
+    }
+
+    if (canvas && ctx) {
         resize();
-        const count = innerWidth < 768 ? 40 : 100;
-        for (let i = 0; i < count; i++) particles.push(new Particle());
+        addEventListener('resize', resize);
+        const n = innerWidth < 768 ? 40 : 100, cd = () => innerWidth < 768 ? 75 : 100;
+        for (let k = 0; k < n; k++) particles.push(new Particle());
 
-        let stars = [];
-        setInterval(() => {
-            if (document.hidden || Math.random() > .75) return;
-            stars.push({ x: Math.random() * width * .9 + width * .1, y: -10, vx: -(6 + Math.random() * 5), vy: 3 + Math.random() * 3, life: 1 });
-        }, 1800);
-
-        (function animateBg() {
+        function frame() {
             ctx.clearRect(0, 0, width, height);
             stars.forEach(st => {
                 st.x += st.vx; st.y += st.vy; st.life -= .011;
@@ -227,55 +265,82 @@ h1, .display { font-family:'Space Grotesk','Segoe UI',sans-serif; }
                 g.addColorStop(0, `rgba(255,255,255,${Math.max(st.life, 0)})`); g.addColorStop(1, 'rgba(0,255,255,0)');
                 ctx.strokeStyle = g; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.moveTo(st.x, st.y); ctx.lineTo(tx, ty); ctx.stroke();
             });
-            stars = stars.filter(st => st.life > 0);
-            const cd = innerWidth < 768 ? 75 : 100;
-            particles.forEach(p => {
+            stars = stars.filter(s => s.life > 0);
+            ctx.lineWidth = 1;
+            const D = cd();
+            for (let a = 0; a < particles.length; a++) {
+                const p = particles[a];
                 p.update(); p.draw();
-                particles.forEach(p2 => {
-                    const d = Math.hypot(p.x - p2.x, p.y - p2.y);
-                    if (d < cd) { ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.strokeStyle = `rgba(100,255,255,${0.2 - d / (cd * 4)})`; ctx.stroke(); }
-                });
+                for (let b = a + 1; b < particles.length; b++) {   // each pair once
+                    const q = particles[b], dx = p.x - q.x, dy = p.y - q.y;
+                    if (Math.abs(dx) > D || Math.abs(dy) > D) continue;
+                    const d = Math.hypot(dx, dy);
+                    if (d < D) { ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.strokeStyle = `rgba(100,255,255,${0.2 - d / (D * 4)})`; ctx.stroke(); }
+                }
                 if (mouse.x != null) {
                     const d = Math.hypot(p.x - mouse.x, p.y - mouse.y);
                     if (d < 150) { ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(mouse.x, mouse.y); ctx.strokeStyle = `rgba(0,255,255,${0.4 - d / 375})`; ctx.stroke(); }
                 }
+            }
+            bursts.forEach(s => {
+                s.x += s.vx; s.y += s.vy; s.vx *= .96; s.vy *= .96; s.life -= .02;
+                ctx.beginPath(); ctx.arc(s.x, s.y, 2, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(${s.c},${Math.max(s.life, 0)})`; ctx.fill();
             });
-            requestAnimationFrame(animateBg);
-        })();
+            bursts = bursts.filter(s => s.life > 0);
+        }
 
-        // Ripple on click (all devices)
-        document.querySelectorAll('.project-card').forEach(card => {
-            card.addEventListener('click', (e) => {
-                const r = card.getBoundingClientRect(), s = document.createElement('span');
-                s.className = 'ripple'; s.style.left = (e.clientX - r.left) + 'px'; s.style.top = (e.clientY - r.top) + 'px';
-                card.appendChild(s); setTimeout(() => s.remove(), 700);
-            });
+        if (reduce) {
+            frame();   // one static frame, no motion
+        } else {
+            setInterval(() => {
+                if (document.hidden || Math.random() > .75) return;
+                stars.push({ x: Math.random() * width * .9 + width * .1, y: -10, vx: -(6 + Math.random() * 5), vy: 3 + Math.random() * 3, life: 1 });
+            }, 1800);
+            (function loop() { frame(); requestAnimationFrame(loop); })();
+        }
+    }
+
+    // Click: ripple + particle burst
+    cards.forEach(card => {
+        card.addEventListener('click', e => {
+            if (reduce) return;
+            const r = card.getBoundingClientRect(), s = document.createElement('span');
+            s.className = 'ripple'; s.style.left = (e.clientX - r.left) + 'px'; s.style.top = (e.clientY - r.top) + 'px';
+            card.appendChild(s); setTimeout(() => s.remove(), 700);
+            for (let k = 0; k < 18; k++) {
+                const a = Math.random() * Math.PI * 2, v = 2 + Math.random() * 4;
+                bursts.push({ x: e.clientX, y: e.clientY, vx: Math.cos(a) * v, vy: Math.sin(a) * v, life: 1, c: COLORS[Math.random() * COLORS.length | 0] });
+            }
         });
+    });
 
-        if (matchMedia('(pointer: fine)').matches) {
-            const dot = document.querySelector('.cursor-dot'), ring = document.querySelector('.cursor-ring');
-            const glow = document.querySelector('.mouse-glow');
-            if (!dot || !ring) return;
+    // Desktop-only custom cursor: enabled on first real mouse movement, so the
+    // native cursor is never hidden unless the custom one is actually working.
+    if (matchMedia('(pointer: fine)').matches) {
+        const root = document.documentElement;
+        const dot = document.querySelector('.cursor-dot'), ring = document.querySelector('.cursor-ring');
+        const glow = document.querySelector('.mouse-glow');
+        if (dot && ring && glow) {
             let rx = innerWidth / 2, ry = innerHeight / 2;
-
-            addEventListener('mousemove', (e) => {
+            addEventListener('mousemove', e => {
+                root.classList.add('custom-cursor');
                 mouse.x = e.clientX; mouse.y = e.clientY;
                 dot.style.left = mouse.x + 'px'; dot.style.top = mouse.y + 'px';
                 glow.style.opacity = 1; glow.style.transform = `translate(${mouse.x - 310}px, ${mouse.y - 310}px)`;
             });
-            document.addEventListener('mouseover', (e) => ring.classList.toggle('is-hovering', !!e.target.closest('a, button, [role="button"]')));
+            document.addEventListener('mouseleave', () => { mouse.x = mouse.y = null; glow.style.opacity = 0; root.classList.remove('custom-cursor'); });
+            document.addEventListener('mouseover', e => ring.classList.toggle('is-hovering', !!e.target.closest('a, button, [role="button"]')));
             addEventListener('mousedown', () => { dot.classList.add('is-clicking'); ring.classList.add('is-clicking'); });
             addEventListener('mouseup', () => { dot.classList.remove('is-clicking'); ring.classList.remove('is-clicking'); });
-
             (function renderCursor() {
                 if (mouse.x != null) { rx += (mouse.x - rx) * .15; ry += (mouse.y - ry) * .15; ring.style.left = rx + 'px'; ring.style.top = ry + 'px'; }
                 requestAnimationFrame(renderCursor);
             })();
 
-            // 3D tilt + spotlight + magnetic pull
-            document.querySelectorAll('.magnetic-btn').forEach(btn => {
+            if (!reduce) cards.forEach(btn => {
                 btn.addEventListener('mouseenter', () => btn.classList.add('is-magnetic'));
-                btn.addEventListener('mousemove', (e) => {
+                btn.addEventListener('mousemove', e => {
                     const r = btn.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
                     const px = x / r.width - .5, py = y / r.height - .5;
                     btn.style.setProperty('--mx', x + 'px'); btn.style.setProperty('--my', y + 'px');
@@ -284,7 +349,8 @@ h1, .display { font-family:'Space Grotesk','Segoe UI',sans-serif; }
                 btn.addEventListener('mouseleave', () => { btn.classList.remove('is-magnetic'); btn.style.transform = ''; });
             });
         }
-    });
-    </script>
+    }
+})();
+</script>
 </body>
 </html>
