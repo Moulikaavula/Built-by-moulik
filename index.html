@@ -3,223 +3,258 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Built by Moulik | AI-Powered Projects</title>
+    <title>Built by Moulik</title>
+    
+    <!-- Code-Generated SVG Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' stop-color='%2300ffff'/%3E%3Cstop offset='100%25' stop-color='%238b5cf6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' fill='black'/%3E%3Cg fill='url(%23grad)'%3E%3Crect x='16' y='16' width='22' height='8' rx='1'/%3E%3Crect x='62' y='16' width='22' height='8' rx='1'/%3E%3Crect x='16' y='28' width='28' height='8' rx='1'/%3E%3Crect x='56' y='28' width='28' height='8' rx='1'/%3E%3Crect x='16' y='40' width='32' height='8' rx='1'/%3E%3Crect x='52' y='40' width='32' height='8' rx='1'/%3E%3Crect x='16' y='52' width='22' height='8' rx='1'/%3E%3Crect x='42' y='52' width='16' height='8' rx='1'/%3E%3Crect x='62' y='52' width='22' height='8' rx='1'/%3E%3Crect x='16' y='64' width='22' height='8' rx='1'/%3E%3Crect x='46' y='64' width='8' height='8' rx='1'/%3E%3Crect x='62' y='64' width='22' height='8' rx='1'/%3E%3Crect x='16' y='76' width='22' height='8' rx='1'/%3E%3Crect x='62' y='76' width='22' height='8' rx='1'/%3E%3C/g%3E%3C/svg%3E">
+
+    <!-- Tailwind & FontAwesome -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        body { margin: 0; overflow-x: hidden; background: #050505; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        #canvas-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; }
-        
-        /* Glassmorphism */
-        .glass-panel { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.05); }
-        .glass-btn { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); transition: background 0.3s ease, border 0.3s ease, transform 0.3s ease; }
-        .glass-btn:hover { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(0, 255, 255, 0.3); }
-
-        /* Custom Cursor - Strictly for devices with a mouse */
-        @media (pointer: fine) {
-            body { cursor: none; }
-            .cursor-dot { position: fixed; top: 0; left: 0; width: 8px; height: 8px; background: cyan; border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); box-shadow: 0 0 10px cyan; }
-            .cursor-ring { position: fixed; top: 0; left: 0; width: 30px; height: 30px; border: 1px solid rgba(0, 255, 255, 0.5); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: width 0.2s, height 0.2s; }
-            a:hover ~ .cursor-ring { width: 50px; height: 50px; border-color: cyan; background: rgba(0, 255, 255, 0.1); }
-            
-            /* Disable native transform transition when magnetic effect is active to prevent jitter */
-            .magnetic-btn.is-magnetic { transition: background 0.3s ease, border 0.3s ease; }
-        }
-    </style>
-</head>
-<body class="min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 md:p-8">
     
-    <!-- Custom Cursor Elements -->
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=swap">
+<style>
+@property --angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+:root { --cyan:#00ffff; --violet:#8b5cf6; }
+body { margin:0; overflow-x:hidden; background:#050505; color:#fff; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; }
+h1, .display { font-family:'Space Grotesk','Segoe UI',sans-serif; }
+#canvas-bg { position:fixed; inset:0; width:100vw; height:100vh; z-index:-1; pointer-events:none; }
+
+/* Aurora + grid backdrop */
+.aurora { position:fixed; inset:0; z-index:-3; overflow:hidden; pointer-events:none; }
+.aurora i { position:absolute; border-radius:50%; filter:blur(100px); animation:drift 20s ease-in-out infinite alternate; }
+.aurora i:nth-child(1){ width:50vmax; height:50vmax; background:#00e5ff; opacity:.16; top:-18vmax; left:-12vmax; }
+.aurora i:nth-child(2){ width:46vmax; height:46vmax; background:#8b5cf6; opacity:.2; bottom:-18vmax; right:-10vmax; animation-delay:-7s; }
+.aurora i:nth-child(3){ width:30vmax; height:30vmax; background:#ff3df2; opacity:.09; top:35%; left:55%; animation-delay:-13s; }
+@keyframes drift { to { transform:translate(8vmax,6vmax) scale(1.2); } }
+.grid-bg { position:fixed; inset:0; z-index:-2; pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+  background-size:52px 52px; -webkit-mask-image:radial-gradient(ellipse at center,#000 25%,transparent 72%); mask-image:radial-gradient(ellipse at center,#000 25%,transparent 72%); }
+
+/* Panel with spinning gradient edge */
+.glass-panel { position:relative; background:rgba(255,255,255,.03); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); border:1px solid rgba(255,255,255,.05); }
+.edge::before, .project-card::after { content:''; position:absolute; inset:-1px; border-radius:inherit; padding:1.5px; pointer-events:none;
+  background:conic-gradient(from var(--angle),transparent 0 62%,var(--accent,var(--cyan)),var(--cyan),transparent);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0); -webkit-mask-composite:xor; mask-composite:exclude;
+  animation:spin 5s linear infinite; }
+@keyframes spin { to { --angle:360deg; } }
+
+.logo-wrap { border:1px solid rgba(255,255,255,.12); animation:float 5s ease-in-out infinite, pulse 3s ease-in-out infinite; }
+@keyframes float { 50% { transform:translateY(-6px); } }
+@keyframes pulse { 0%,100% { box-shadow:0 0 18px rgba(0,255,255,.25); } 50% { box-shadow:0 0 38px rgba(139,92,246,.55); } }
+.title-grad { background:linear-gradient(90deg,#00ffff,#8b5cf6,#ff3df2,#00ffff); background-size:300% 100%; -webkit-background-clip:text; background-clip:text; color:transparent; animation:shimmer 6s linear infinite; }
+@keyframes shimmer { to { background-position:300% 0; } }
+.pill { display:inline-flex; align-items:center; gap:.5rem; font-size:11px; letter-spacing:.15em; text-transform:uppercase; color:#9ca3af; padding:.35rem .8rem; border:1px solid rgba(255,255,255,.1); border-radius:999px; background:rgba(255,255,255,.03); }
+.dot-live { width:7px; height:7px; border-radius:50%; background:#4ade80; box-shadow:0 0 0 0 rgba(74,222,128,.7); animation:ping 1.8s infinite; }
+@keyframes ping { to { box-shadow:0 0 0 9px rgba(74,222,128,0); } }
+
+/* Entrance */
+.reveal { opacity:0; transform:translateY(26px); animation:rise .9s cubic-bezier(.2,.8,.2,1) forwards; animation-delay:calc(var(--i,0) * 130ms); }
+@keyframes rise { to { opacity:1; transform:none; } }
+
+/* ===== PROJECT BUTTONS ===== */
+.project-card { --accent:#a855f7; --mx:50%; --my:50%; position:relative; display:flex; align-items:center; gap:1.25rem; padding:1.25rem; border-radius:1.1rem; overflow:hidden;
+  background:linear-gradient(135deg,rgba(255,255,255,.06),rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.09);
+  text-decoration:none; color:inherit; will-change:transform; transition:transform .6s cubic-bezier(.2,.8,.2,1),box-shadow .4s,border-color .4s; }
+.project-card.is-magnetic { transition:box-shadow .4s,border-color .4s; }
+.project-card:hover { border-color:transparent; box-shadow:0 18px 50px -12px color-mix(in srgb,var(--accent) 55%,transparent),0 0 0 1px rgba(255,255,255,.04); }
+.project-card::before { content:''; position:absolute; inset:0; pointer-events:none; opacity:0; transition:opacity .3s;
+  background:radial-gradient(360px circle at var(--mx) var(--my),color-mix(in srgb,var(--accent) 30%,transparent),transparent 65%); }
+.project-card:hover::before { opacity:1; }
+.project-card::after { opacity:0; transition:opacity .3s; }
+.project-card:hover::after { opacity:1; }
+.shine { position:absolute; top:0; left:-60%; width:35%; height:100%; pointer-events:none; transform:skewX(-20deg);
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.2),transparent); transition:left .9s ease; }
+.project-card:hover .shine { left:130%; }
+.icon-orb { position:relative; width:3.5rem; height:3.5rem; flex-shrink:0; border-radius:50%; background:rgba(0,0,0,.55); display:flex; align-items:center; justify-content:center;
+  font-size:1.5rem; color:var(--accent); border:1px solid color-mix(in srgb,var(--accent) 40%,transparent); transition:transform .45s cubic-bezier(.3,1.6,.5,1),box-shadow .4s; transform:translateZ(30px); }
+.project-card:hover .icon-orb { transform:translateZ(30px) scale(1.18) rotate(-10deg); box-shadow:0 0 28px var(--accent); }
+.card-text { display:flex; flex-direction:column; text-align:left; pointer-events:none; transform:translateZ(18px); }
+.card-title { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.1rem; letter-spacing:.02em; transition:color .3s; }
+.project-card:hover .card-title { color:#a5f3fc; }
+.arrow { margin-left:auto; flex-shrink:0; width:2.4rem; height:2.4rem; border-radius:50%; display:flex; align-items:center; justify-content:center; background:var(--accent); color:#000;
+  opacity:0; transform:translateX(-16px) scale(.6); transition:opacity .35s,transform .45s cubic-bezier(.3,1.6,.5,1); pointer-events:none; }
+.project-card:hover .arrow { opacity:1; transform:none; }
+.project-card:active { filter:brightness(1.25); }
+.ripple { position:absolute; border-radius:50%; width:20px; height:20px; margin:-10px 0 0 -10px; background:rgba(0,255,255,.45); transform:scale(0); animation:rip .7s ease-out forwards; pointer-events:none; }
+@keyframes rip { to { transform:scale(28); opacity:0; } }
+@media (max-width:640px){ .project-card{ flex-direction:column; text-align:center; } .card-text{ text-align:center; } .arrow{ display:none; } }
+
+/* Custom Cursor - Desktop Only */
+@media (pointer: fine) {
+  html, body, *, *::before, *::after { cursor:none !important; }
+  .cursor-dot { position:fixed; top:0; left:0; width:8px; height:8px; background:cyan; border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); box-shadow:0 0 10px cyan; transition:width .15s,height .15s; }
+  .cursor-ring { position:fixed; top:0; left:0; width:30px; height:30px; border:1px solid rgba(0,255,255,.5); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:width .2s,height .2s,background .2s; }
+  .cursor-ring.is-hovering { width:56px; height:56px; border-color:cyan; background:rgba(0,255,255,.1); }
+  .cursor-ring.is-clicking { width:22px; height:22px; background:rgba(0,255,255,.25); }
+  .cursor-dot.is-clicking { width:5px; height:5px; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; } .reveal { opacity:1; transform:none; } }
+</style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 md:p-8 relative">
+    <div class="aurora"><i></i><i></i><i></i></div>
+    <div class="grid-bg"></div>
     <div class="cursor-dot hidden md:block"></div>
     <div class="cursor-ring hidden md:block"></div>
-
-    <!-- Background Canvas -->
     <canvas id="canvas-bg"></canvas>
 
-    <!-- Main Container -->
-    <main class="glass-panel w-full max-w-2xl rounded-2xl md:rounded-3xl p-6 md:p-8 flex flex-col items-center shadow-2xl z-10 relative my-8">
-        
-        <!-- Profile / Header -->
-        <div class="w-20 h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-br from-gray-800 to-black flex items-center justify-center border border-gray-700 shadow-lg mb-5 md:mb-6">
-            <i class="fa-solid fa-code text-3xl md:text-4xl text-cyan-400"></i>
+    <main class="glass-panel edge w-full max-w-2xl rounded-2xl md:rounded-3xl p-6 md:p-8 flex flex-col items-center shadow-2xl z-10 relative my-8">
+        <div class="reveal flex flex-col items-center" style="--i:0">
+        <!-- Profile / Header SVG Logo -->
+        <div class="logo-wrap w-20 h-20 md:w-24 md:h-24 rounded-xl bg-black overflow-hidden flex items-center justify-center mb-5 md:mb-6">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-full h-full block">
+                <defs>
+                    <linearGradient id="main-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#00ffff"/>
+                        <stop offset="100%" stop-color="#8b5cf6"/>
+                    </linearGradient>
+                </defs>
+                <rect width="100" height="100" fill="black"/>
+                <g fill="url(#main-grad)">
+                    <!-- Left stack -->
+                    <rect x="16" y="16" width="22" height="8" rx="1"/>
+                    <rect x="16" y="28" width="28" height="8" rx="1"/>
+                    <rect x="16" y="40" width="32" height="8" rx="1"/>
+                    <rect x="16" y="52" width="22" height="8" rx="1"/>
+                    <rect x="16" y="64" width="22" height="8" rx="1"/>
+                    <rect x="16" y="76" width="22" height="8" rx="1"/>
+                    <!-- Middle V elements -->
+                    <rect x="42" y="52" width="16" height="8" rx="1"/>
+                    <rect x="46" y="64" width="8" height="8" rx="1"/>
+                    <!-- Right stack -->
+                    <rect x="62" y="16" width="22" height="8" rx="1"/>
+                    <rect x="56" y="28" width="28" height="8" rx="1"/>
+                    <rect x="52" y="40" width="32" height="8" rx="1"/>
+                    <rect x="62" y="52" width="22" height="8" rx="1"/>
+                    <rect x="62" y="64" width="22" height="8" rx="1"/>
+                    <rect x="62" y="76" width="22" height="8" rx="1"/>
+                </g>
+            </svg>
         </div>
         
-        <h1 class="text-2xl md:text-3xl font-bold tracking-wider mb-1 text-center">Built by <span class="text-cyan-400">Moulik</span></h1>
-        <p class="text-[10px] md:text-xs tracking-[0.2em] md:tracking-[0.3em] text-gray-400 mb-8 md:mb-10 uppercase text-center">AI-Powered Projects</p>
+        
+        <h1 class="text-3xl md:text-4xl font-bold tracking-wider mb-2 text-center">Built by <span class="title-grad">Moulik</span></h1>
+        <p class="text-[10px] md:text-xs tracking-[0.2em] md:tracking-[0.3em] text-gray-400 mb-4 uppercase text-center">AI-Powered Projects</p>
+        <span class="pill mb-8 md:mb-10"><span class="dot-live"></span>2 projects live</span>
+        </div>
 
-        <!-- Links Container -->
         <div class="w-full flex flex-col gap-4">
-            
-            <!-- Link 1: Arcade Rave -->
-            <a href="https://moulikaavula.github.io/Arcade-Rave/" target="_blank" class="magnetic-btn glass-btn w-full rounded-xl md:rounded-2xl p-4 md:p-5 flex flex-col sm:flex-row items-center sm:items-start gap-4 md:gap-5 group relative overflow-hidden text-center sm:text-left">
-                <div class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-black/50 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300">
-                    <i class="fa-solid fa-gamepad text-xl md:text-2xl text-purple-400"></i>
+            <div class="reveal" style="--i:1">
+            <a href="https://moulikaavula.github.io/Arcade-Rave/" target="_blank" class="project-card magnetic-btn" style="--accent:#a855f7">
+                <span class="shine"></span>
+                <div class="icon-orb"><i class="fa-solid fa-gamepad pointer-events-none"></i></div>
+                <div class="card-text">
+                    <span class="card-title">Arcade Rave</span>
+                    <span class="text-xs md:text-sm text-gray-400 mt-1 leading-relaxed">A retro-synthwave web arcade featuring a growing collection of classic games and engaging player progression features.</span>
                 </div>
-                <div class="flex flex-col">
-                    <span class="font-semibold text-base md:text-lg tracking-wide group-hover:text-cyan-300 transition-colors">Arcade Rave</span>
-                    <span class="text-xs md:text-sm text-gray-400 mt-1 md:mt-2 leading-relaxed">A retro-synthwave web arcade featuring 25 classic games (including Snake, Pong, and Chess) complete with a daily streak tracker and an XP leveling system.</span>
-                </div>
+                <span class="arrow"><i class="fa-solid fa-arrow-right"></i></span>
             </a>
-
-            <!-- Link 2: DELO -->
-            <a href="https://moulikaavula.github.io/DELO/" target="_blank" class="magnetic-btn glass-btn w-full rounded-xl md:rounded-2xl p-4 md:p-5 flex flex-col sm:flex-row items-center sm:items-start gap-4 md:gap-5 group relative overflow-hidden text-center sm:text-left">
-                <div class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-black/50 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300">
-                    <i class="fa-solid fa-chart-line text-xl md:text-2xl text-green-400"></i>
+            </div>
+            <div class="reveal" style="--i:2">
+            <a href="https://moulikaavula.github.io/DELO/" target="_blank" class="project-card magnetic-btn" style="--accent:#4ade80">
+                <span class="shine"></span>
+                <div class="icon-orb"><i class="fa-solid fa-chart-line pointer-events-none"></i></div>
+                <div class="card-text">
+                    <span class="card-title">DELO Finance Tracker</span>
+                    <span class="text-xs md:text-sm text-gray-400 mt-1 leading-relaxed">A secure personal finance dashboard designed to help you organize your budget, track expenses, and seamlessly manage your money.</span>
                 </div>
-                <div class="flex flex-col">
-                    <span class="font-semibold text-base md:text-lg tracking-wide group-hover:text-cyan-300 transition-colors">DELO Finance Tracker</span>
-                    <span class="text-xs md:text-sm text-gray-400 mt-1 md:mt-2 leading-relaxed">A personal finance dashboard that calculates your monthly leftover income by tracking expenses and debt, with the added security of saving all your changes locally.</span>
-                </div>
+                <span class="arrow"><i class="fa-solid fa-arrow-right"></i></span>
             </a>
-
+            </div>
         </div>
     </main>
 
     <script>
-        // --- Canvas Particle Background ---
+    document.addEventListener('DOMContentLoaded', () => {
         const canvas = document.getElementById('canvas-bg');
+        if (!canvas) return;
         const ctx = canvas.getContext('2d');
-        let width, height;
-        let particles = [];
-        let mouse = { x: null, y: null };
+        let width, height, particles = [], mouse = { x: null, y: null };
+        const COLORS = ['0,255,255', '0,255,255', '139,92,246'];
 
-        // Optimization: Reduce particles on smaller screens to save battery/performance
-        const getParticleCount = () => window.innerWidth < 768 ? 30 : 80;
-
-        function initParticles() {
-            particles = [];
-            const count = getParticleCount();
-            for (let i = 0; i < count; i++) {
-                particles.push(new Particle());
-            }
-        }
-
-        function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-            // Re-initialize particles if crossing the mobile/desktop threshold could be done here, 
-            // but for simplicity we'll just keep them contained to the new dimensions.
-        }
-        
-        window.addEventListener('resize', resize);
-        // Handle mobile orientation changes
-        window.addEventListener('orientationchange', () => setTimeout(resize, 100));
+        function resize() { width = canvas.width = innerWidth; height = canvas.height = innerHeight; }
+        addEventListener('resize', resize);
+        addEventListener('orientationchange', () => setTimeout(resize, 100));
 
         class Particle {
             constructor() {
-                // Initialize randomly within bounds
-                this.x = Math.random() * (window.innerWidth || 1000);
-                this.y = Math.random() * (window.innerHeight || 1000);
-                this.vx = (Math.random() - 0.5) * 0.5;
-                this.vy = (Math.random() - 0.5) * 0.5;
-                this.radius = Math.random() * 1.5 + 0.5;
+                this.x = Math.random() * (innerWidth || 1000); this.y = Math.random() * (innerHeight || 1000);
+                this.vx = (Math.random() - .5) * .5; this.vy = (Math.random() - .5) * .5;
+                this.radius = Math.random() * 1.5 + .5; this.c = COLORS[Math.floor(Math.random() * COLORS.length)];
             }
             update() {
-                this.x += this.vx;
-                this.y += this.vy;
+                this.x += this.vx; this.y += this.vy;
                 if (this.x < 0 || this.x > width) this.vx *= -1;
                 if (this.y < 0 || this.y > height) this.vy *= -1;
             }
             draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(0, 255, 255, 0.5)';
-                ctx.fill();
+                ctx.beginPath(); ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(${this.c},.9)`; ctx.shadowBlur = 5; ctx.shadowColor = `rgb(${this.c})`;
+                ctx.fill(); ctx.shadowBlur = 0;
             }
         }
-
         resize();
-        initParticles();
+        const count = innerWidth < 768 ? 40 : 100;
+        for (let i = 0; i < count; i++) particles.push(new Particle());
 
-        function animateBg() {
+        (function animateBg() {
             ctx.clearRect(0, 0, width, height);
-            
+            const cd = innerWidth < 768 ? 75 : 100;
             particles.forEach(p => {
-                p.update();
-                p.draw();
-                
-                // Connect particles to each other
+                p.update(); p.draw();
                 particles.forEach(p2 => {
-                    const dx = p.x - p2.x;
-                    const dy = p.y - p2.y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    // Connection distance slightly shorter on mobile to save processing
-                    const connectDist = window.innerWidth < 768 ? 75 : 100;
-                    if (dist < connectDist) {
-                        ctx.beginPath();
-                        ctx.moveTo(p.x, p.y);
-                        ctx.lineTo(p2.x, p2.y);
-                        ctx.strokeStyle = `rgba(255, 255, 255, ${0.1 - dist/(connectDist*10)})`;
-                        ctx.stroke();
-                    }
+                    const d = Math.hypot(p.x - p2.x, p.y - p2.y);
+                    if (d < cd) { ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.strokeStyle = `rgba(100,255,255,${0.2 - d / (cd * 4)})`; ctx.stroke(); }
                 });
-
-                // Connect particles to mouse (only matters if mouse is active)
                 if (mouse.x != null) {
-                    const dx = p.x - mouse.x;
-                    const dy = p.y - mouse.y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < 150) {
-                        ctx.beginPath();
-                        ctx.moveTo(p.x, p.y);
-                        ctx.lineTo(mouse.x, mouse.y);
-                        ctx.strokeStyle = `rgba(0, 255, 255, ${0.2 - dist/750})`;
-                        ctx.stroke();
-                    }
+                    const d = Math.hypot(p.x - mouse.x, p.y - mouse.y);
+                    if (d < 150) { ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(mouse.x, mouse.y); ctx.strokeStyle = `rgba(0,255,255,${0.4 - d / 375})`; ctx.stroke(); }
                 }
             });
             requestAnimationFrame(animateBg);
-        }
-        animateBg();
+        })();
 
-        // --- Custom Cursor & Magnetic Physics (Desktop Only) ---
-        if (window.matchMedia("(pointer: fine)").matches) {
-            const dot = document.querySelector('.cursor-dot');
-            const ring = document.querySelector('.cursor-ring');
-            let ringX = 0, ringY = 0;
-
-            window.addEventListener('mousemove', (e) => {
-                mouse.x = e.clientX;
-                mouse.y = e.clientY;
-                dot.style.left = mouse.x + 'px';
-                dot.style.top = mouse.y + 'px';
+        // Ripple on click (all devices)
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                const r = card.getBoundingClientRect(), s = document.createElement('span');
+                s.className = 'ripple'; s.style.left = (e.clientX - r.left) + 'px'; s.style.top = (e.clientY - r.top) + 'px';
+                card.appendChild(s); setTimeout(() => s.remove(), 700);
             });
+        });
 
-            // Smooth ring follow (lerp)
-            function renderCursor() {
-                if (mouse.x != null) {
-                    ringX += (mouse.x - ringX) * 0.15;
-                    ringY += (mouse.y - ringY) * 0.15;
-                    ring.style.left = ringX + 'px';
-                    ring.style.top = ringY + 'px';
-                }
+        if (matchMedia('(pointer: fine)').matches) {
+            const dot = document.querySelector('.cursor-dot'), ring = document.querySelector('.cursor-ring');
+            if (!dot || !ring) return;
+            let rx = innerWidth / 2, ry = innerHeight / 2;
+
+            addEventListener('mousemove', (e) => {
+                mouse.x = e.clientX; mouse.y = e.clientY;
+                dot.style.left = mouse.x + 'px'; dot.style.top = mouse.y + 'px';
+            });
+            document.addEventListener('mouseover', (e) => ring.classList.toggle('is-hovering', !!e.target.closest('a, button, [role="button"]')));
+            addEventListener('mousedown', () => { dot.classList.add('is-clicking'); ring.classList.add('is-clicking'); });
+            addEventListener('mouseup', () => { dot.classList.remove('is-clicking'); ring.classList.remove('is-clicking'); });
+
+            (function renderCursor() {
+                if (mouse.x != null) { rx += (mouse.x - rx) * .15; ry += (mouse.y - ry) * .15; ring.style.left = rx + 'px'; ring.style.top = ry + 'px'; }
                 requestAnimationFrame(renderCursor);
-            }
-            renderCursor();
+            })();
 
-            // Magnetic Buttons
-            const magneticBtns = document.querySelectorAll('.magnetic-btn');
-            magneticBtns.forEach(btn => {
-                btn.addEventListener('mouseenter', () => {
-                    btn.classList.add('is-magnetic');
-                });
-                
+            // 3D tilt + spotlight + magnetic pull
+            document.querySelectorAll('.magnetic-btn').forEach(btn => {
+                btn.addEventListener('mouseenter', () => btn.classList.add('is-magnetic'));
                 btn.addEventListener('mousemove', (e) => {
-                    const rect = btn.getBoundingClientRect();
-                    const x = e.clientX - rect.left - rect.width / 2;
-                    const y = e.clientY - rect.top - rect.height / 2;
-                    
-                    // Pull button slightly toward mouse
-                    btn.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px)`;
+                    const r = btn.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+                    const px = x / r.width - .5, py = y / r.height - .5;
+                    btn.style.setProperty('--mx', x + 'px'); btn.style.setProperty('--my', y + 'px');
+                    btn.style.transform = `perspective(900px) rotateX(${-py * 9}deg) rotateY(${px * 9}deg) translate(${px * 8}px, ${py * 8}px) scale(1.025)`;
                 });
-
-                btn.addEventListener('mouseleave', () => {
-                    btn.classList.remove('is-magnetic');
-                    // Reset position smoothly
-                    btn.style.transform = `translate(0px, 0px)`;
-                });
+                btn.addEventListener('mouseleave', () => { btn.classList.remove('is-magnetic'); btn.style.transform = ''; });
             });
         }
+    });
     </script>
 </body>
 </html>
