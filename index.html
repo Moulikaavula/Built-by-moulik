@@ -27,9 +27,17 @@ h1, .display { font-family:'Space Grotesk','Segoe UI',sans-serif; }
 .aurora i:nth-child(2){ width:46vmax; height:46vmax; background:#8b5cf6; opacity:.2; bottom:-18vmax; right:-10vmax; animation-delay:-7s; }
 .aurora i:nth-child(3){ width:30vmax; height:30vmax; background:#ff3df2; opacity:.09; top:35%; left:55%; animation-delay:-13s; }
 @keyframes drift { to { transform:translate(8vmax,6vmax) scale(1.2); } }
-.grid-bg { position:fixed; inset:0; z-index:-2; pointer-events:none;
-  background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
-  background-size:52px 52px; -webkit-mask-image:radial-gradient(ellipse at center,#000 25%,transparent 72%); mask-image:radial-gradient(ellipse at center,#000 25%,transparent 72%); }
+.horizon { position:fixed; left:0; right:0; bottom:0; height:62vh; z-index:-3; pointer-events:none;
+  background:radial-gradient(ellipse 70% 55% at 50% 100%,rgba(255,61,242,.30),rgba(139,92,246,.18) 40%,transparent 70%); }
+.floor { position:fixed; left:-60%; right:-60%; bottom:0; height:46vh; z-index:-2; pointer-events:none; perspective:380px; overflow:hidden;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 55%); mask-image:linear-gradient(to bottom,transparent 0,#000 55%); }
+.floor div { position:absolute; left:0; right:0; top:0; height:260%; transform-origin:50% 0; transform:rotateX(72deg);
+  background-image:linear-gradient(rgba(255,61,242,.75) 2px,transparent 2px),linear-gradient(90deg,rgba(0,255,255,.6) 2px,transparent 2px);
+  background-size:70px 70px; animation:floorMove 1.8s linear infinite; filter:drop-shadow(0 0 6px rgba(255,61,242,.6)); }
+@keyframes floorMove { to { background-position:0 70px; } }
+.mouse-glow { position:fixed; top:0; left:0; width:620px; height:620px; border-radius:50%; z-index:-2; pointer-events:none; opacity:0; transition:opacity .5s;
+  background:radial-gradient(circle,rgba(0,255,255,.14),rgba(139,92,246,.07) 45%,transparent 68%); will-change:transform; }
+.vignette { position:fixed; inset:0; z-index:0; pointer-events:none; background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.65)); }
 
 /* Panel with spinning gradient edge */
 .glass-panel { position:relative; background:rgba(255,255,255,.03); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); border:1px solid rgba(255,255,255,.05); }
@@ -94,7 +102,10 @@ h1, .display { font-family:'Space Grotesk','Segoe UI',sans-serif; }
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 md:p-8 relative">
     <div class="aurora"><i></i><i></i><i></i></div>
-    <div class="grid-bg"></div>
+    <div class="horizon"></div>
+    <div class="floor"><div></div></div>
+    <div class="mouse-glow"></div>
+    <div class="vignette"></div>
     <div class="cursor-dot hidden md:block"></div>
     <div class="cursor-ring hidden md:block"></div>
     <canvas id="canvas-bg"></canvas>
@@ -185,6 +196,10 @@ h1, .display { font-family:'Space Grotesk','Segoe UI',sans-serif; }
             }
             update() {
                 this.x += this.vx; this.y += this.vy;
+                if (mouse.x != null) {
+                    const dx = this.x - mouse.x, dy = this.y - mouse.y, d = Math.hypot(dx, dy);
+                    if (d < 130 && d > 0) { this.x += dx / d * (130 - d) * .03; this.y += dy / d * (130 - d) * .03; }
+                }
                 if (this.x < 0 || this.x > width) this.vx *= -1;
                 if (this.y < 0 || this.y > height) this.vy *= -1;
             }
@@ -198,8 +213,21 @@ h1, .display { font-family:'Space Grotesk','Segoe UI',sans-serif; }
         const count = innerWidth < 768 ? 40 : 100;
         for (let i = 0; i < count; i++) particles.push(new Particle());
 
+        let stars = [];
+        setInterval(() => {
+            if (document.hidden || Math.random() > .75) return;
+            stars.push({ x: Math.random() * width * .9 + width * .1, y: -10, vx: -(6 + Math.random() * 5), vy: 3 + Math.random() * 3, life: 1 });
+        }, 1800);
+
         (function animateBg() {
             ctx.clearRect(0, 0, width, height);
+            stars.forEach(st => {
+                st.x += st.vx; st.y += st.vy; st.life -= .011;
+                const tx = st.x - st.vx * 9, ty = st.y - st.vy * 9, g = ctx.createLinearGradient(st.x, st.y, tx, ty);
+                g.addColorStop(0, `rgba(255,255,255,${Math.max(st.life, 0)})`); g.addColorStop(1, 'rgba(0,255,255,0)');
+                ctx.strokeStyle = g; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.moveTo(st.x, st.y); ctx.lineTo(tx, ty); ctx.stroke();
+            });
+            stars = stars.filter(st => st.life > 0);
             const cd = innerWidth < 768 ? 75 : 100;
             particles.forEach(p => {
                 p.update(); p.draw();
@@ -226,12 +254,14 @@ h1, .display { font-family:'Space Grotesk','Segoe UI',sans-serif; }
 
         if (matchMedia('(pointer: fine)').matches) {
             const dot = document.querySelector('.cursor-dot'), ring = document.querySelector('.cursor-ring');
+            const glow = document.querySelector('.mouse-glow');
             if (!dot || !ring) return;
             let rx = innerWidth / 2, ry = innerHeight / 2;
 
             addEventListener('mousemove', (e) => {
                 mouse.x = e.clientX; mouse.y = e.clientY;
                 dot.style.left = mouse.x + 'px'; dot.style.top = mouse.y + 'px';
+                glow.style.opacity = 1; glow.style.transform = `translate(${mouse.x - 310}px, ${mouse.y - 310}px)`;
             });
             document.addEventListener('mouseover', (e) => ring.classList.toggle('is-hovering', !!e.target.closest('a, button, [role="button"]')));
             addEventListener('mousedown', () => { dot.classList.add('is-clicking'); ring.classList.add('is-clicking'); });
